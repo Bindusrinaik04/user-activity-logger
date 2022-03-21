@@ -1,0 +1,54 @@
+syntax="proto3";
+import "google/protobuf/timestamp.proto";
+//import "google/protobuf/time";
+import "google/protobuf/duration.proto";
+package user_activity_logger;
+
+option go_package="./proto";
+message Person {
+    string name = 1;
+    int32 id = 2;  // Unique ID number for this person.
+    string email = 3;
+}
+ message Activity{
+     
+    Task t=1;
+    bool status=4;
+    bool valid=6;
+    string lable=2;
+    google.protobuf.Timestamp set=3;
+    google.protobuf.Duration hours=5;
+
+    
+  }
+  enum Task{
+    SLEEP = 0;
+    EAT= 1;
+    READ = 2;
+    PLAY =3;
+  }  
+   
+  message AddUsersrequest {
+    Person people = 1;
+  }
+  message AddUsersresponse{
+    Person people=1;
+  }
+// [END messages]
+
+   message updateActivityRequest{
+     Activity act=1;
+   }
+   message updateActivityResponse{
+    Activity act=1;
+  }
+  
+  
+service TrackActivity{
+    rpc Add(AddUsersrequest) returns (AddUsersresponse);
+    rpc isDone(updateActivityRequest) returns(updateActivityResponse);
+    rpc isValid(updateActivityRequest) returns(updateActivityResponse);}
+
+
+
+
